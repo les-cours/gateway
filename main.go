@@ -1,7 +1,7 @@
 package main
 
-import "github.com/les-cours/gateway/services"
+import "github.com/les-cours/gateway/service"
 
 func main() {
-	services.Start()
+	service.Start()
 }
