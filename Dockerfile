@@ -29,6 +29,6 @@ RUN go build -o main .
 #FROM scratch
 
 #COPY --from=builder /dist/main /
-EXPOSE 8080
+EXPOSE 9090
 # Command to run
 CMD ["./main"]
