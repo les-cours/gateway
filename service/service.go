@@ -22,7 +22,7 @@ var (
 	cpuPercentage  = prometheus.NewGauge(prometheus.GaugeOpts{Name: "cpu_percentage", Help: "cpu percentage"})
 )
 
-func monitoring_middleware(originalHandler http.Handler) http.HandlerFunc {
+func monitoringMiddleware(originalHandler http.Handler) http.HandlerFunc {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -37,9 +37,11 @@ func monitoring_middleware(originalHandler http.Handler) http.HandlerFunc {
 }
 func Start() {
 	registry.MustRegister(requestCounter, memoryUsage, cpuPercentage, goRoutineNum)
+	log.Println(env.Settings.LearningApiURL)
 	schemas, err := graphql.IntrospectRemoteSchemas(checkApis(
 		env.Settings.UserApiURL,
-		// env.Settings.RecordApiURL,
+		env.Settings.LearningApiURL,
+		//env.Settings.Apis ...
 	)...)
 	if err != nil {
 		log.Fatalf("Error in IntrospectRemoteSchemas: %v", err)
@@ -51,7 +53,7 @@ func Start() {
 	}
 	http.HandleFunc("/api", cors(decodeToken(gw.GraphQLHandler)))
 	promHandler := promhttp.HandlerFor(registry, promhttp.HandlerOpts{})
-	http.HandleFunc("/metrics", cors(decodeToken(monitoring_middleware(promHandler))))
+	http.HandleFunc("/metrics", cors(decodeToken(monitoringMiddleware(promHandler))))
 	http.HandleFunc("/", cors(decodeToken(gw.PlaygroundHandler)))
 	log.Printf("Starting https server on port " + env.Settings.HttpPort)
 	log.Printf("Starting graphql gateway...")

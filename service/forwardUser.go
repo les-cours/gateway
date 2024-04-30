@@ -2,10 +2,8 @@ package service
 
 import (
 	"encoding/json"
-	"net/http"
-	"strconv"
-
 	"github.com/nautilus/gateway"
+	"net/http"
 )
 
 var forwardUser = gateway.RequestMiddleware(func(r *http.Request) error {
@@ -20,12 +18,8 @@ var forwardUser = gateway.RequestMiddleware(func(r *http.Request) error {
 	delete, _ := json.Marshal(user.Delete)
 	r.Header.Set("Accountid", user.AccountID)
 	r.Header.Set("Id", user.ID)
+	r.Header.Set("User-Type", user.UserType)
 	r.Header.Set("Email", user.Email)
-	r.Header.Set("Cobrowsing", strconv.FormatBool(user.CoBrowsing))
-	r.Header.Set("Screenshare", strconv.FormatBool(user.ScreenShare))
-	r.Header.Set("Audiodownload", strconv.FormatBool(user.AudioDownload))
-	r.Header.Set("Videodownload", strconv.FormatBool(user.VideoDownload))
-	r.Header.Set("Username", user.Username)
 	r.Header.Set("Create", string(create))
 	r.Header.Set("Read", string(read))
 	r.Header.Set("Update", string(update))
