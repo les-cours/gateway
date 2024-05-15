@@ -41,6 +41,7 @@ func Start() {
 	schemas, err := graphql.IntrospectRemoteSchemas(checkApis(
 		env.Settings.UserApiURL,
 		env.Settings.LearningApiURL,
+		env.Settings.OrgsApiURL,
 		//env.Settings.Apis ...
 	)...)
 	if err != nil {
