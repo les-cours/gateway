@@ -9,6 +9,7 @@ type Config struct {
 	LearningApiURL  string
 	AuthAPIEndPoint string
 	OrgsApiURL      string
+	PaymentApiURL   string
 }
 
 var Settings *Config
@@ -23,6 +24,7 @@ func init() {
 	viper.BindEnv("LEARNING_API_URL")
 	viper.BindEnv("AUTH_API_END_POINT")
 	viper.BindEnv("ORGS_API_URL")
+	viper.BindEnv("PAYMENT_API_URL")
 
 	Settings = &Config{
 		HttpPort:        viper.GetString("HTTP_PORT"),
@@ -31,5 +33,6 @@ func init() {
 		LearningApiURL:  viper.GetString("LEARNING_API_URL"),
 		AuthAPIEndPoint: viper.GetString("AUTH_API_END_POINT"),
 		OrgsApiURL:      viper.GetString("ORGS_API_URL"),
+		PaymentApiURL:   viper.GetString("PAYMENT_API_URL"),
 	}
 }
