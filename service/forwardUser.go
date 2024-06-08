@@ -18,7 +18,7 @@ var forwardUser = gateway.RequestMiddleware(func(r *http.Request) error {
 	delete, _ := json.Marshal(user.Delete)
 	r.Header.Set("Accountid", user.AccountID)
 	r.Header.Set("Id", user.ID)
-	r.Header.Set("User-Type", user.UserType)
+	r.Header.Set("Role", user.UserType)
 	r.Header.Set("Email", user.Email)
 	r.Header.Set("Create", string(create))
 	r.Header.Set("Read", string(read))
